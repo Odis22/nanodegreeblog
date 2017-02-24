@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% for post in posts %}
+<section class="post">
+	<div class="post-header">
+	  <a href="/{{post.key().id()}}">
+		<h2>{{post.subject}}</h2>
+	  </a>
+	  <h4>{{post.likes}}  likes</h4>
+	  <h3 class="txt-right"><span>Posted on</span> {{post.created.strftime("%b %d, %Y")}}
+	      <span>by</span> {{post.author.name}}</h3>
+	 </div>
+	 <div class="post-content">
+		{{ post.content | safe }}
+	</div>
+</section>
+    <br><br>
+  {% endfor %}
+{% endblock %}

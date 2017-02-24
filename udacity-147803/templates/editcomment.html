@@ -1,0 +1,20 @@
+<!-- This is the HTML template to edit comment page -->
+
+<!-- Gets the base HTML template -->
+{% extends "base.html" %}
+
+<!-- inserts this content to base.html -->
+{% block content %}
+  <h2>Edit your comment.</h2>
+
+    <form method="post">
+        <textarea name="content">{{ content | safe }}</textarea>
+        <br>
+        <br>
+      <h3>{{error}}</h3>
+      <br>
+      <button type="submit">Save</button>
+    </form>
+    <br>
+    <a href="/{{ post_id }}">Cancel</a>
+{% endblock %}

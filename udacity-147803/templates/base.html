@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link type="text/css" rel="stylesheet" href="/static/main.css" />
+
+  <title>CS 253 Blog</title>
+</head>
+
+<body>
+<div=menu>
+ {% if user %}
+  <h1>Hello {{user.name}}</h1>
+  <a href="/blog" class="main-title">
+    CS 253 Blog
+  </a>
+  <br><br>
+   <a href="/newpost" class="main-title">
+    post your own thoughts
+  </a>
+  <br><br>
+  <a href="/logout" class="main-title">
+   logout
+  </a>
+  {% else %}
+                      <p class="login-options">
+                        <a id="login-control" class="btn btn-primary" href="/login">Login</a>
+                        <a id="signup-control" class="btn btn-danger" href="/signup">Sign Up</a>
+                      </p>
+                    {% endif %}
+ </div>
+
+  <div id="content">
+  {% block content %}
+  {% endblock %}
+  </div>
+</body>
+
+</html>
+

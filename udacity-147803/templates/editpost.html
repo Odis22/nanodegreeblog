@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <header class="row text-center">
+        <h2>Edit Post</h2>
+    </header>
+
+    <form class="row" method="post">
+        <label class="col-xs-12">
+            <div>subject</div>
+            <input type="text" name="subject" value="{{ subject }}">
+        </label>
+
+        <label class="col-xs-12">
+            <div>blog</div>
+            <textarea name="content">{{ content }}</textarea>
+        </label>
+
+        <div class="error">{{ error }}</div>
+
+        <input type="submit">
+        <input type="button" value="Cancel" onclick="window.location.replace
+        ('/blog')">
+    </form>
+	<br>
+	<a href="/{{ post.key().id() }}?">Cancel</a>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+<!-- inserts this content to base.html -->
+{% block content %}
+	<section class="post">
+	  	<div class="post-header">
+		    <h2>{{post.subject}}</h2>
+		    <h4>{{post.likes}}  likes</h4>
+		    <h3 class="txt-right">
+		    	<span>Posted on</span>
+		    	{{post.created.strftime("%b %d, %Y")}}
+		    	<span>by</span>
+		    	{{post.author.name}}
+		    </h3>
+	  	</div>
+
+	  	<div class="post-content">
+	    	<p>{{post.content | safe}}</p>
+	  	</div>
+
+	  	<div class="post-footer">
+	  	{% if user.name %}
+	  	<!-- is user is logged in -->
+			{% if post.author.name != user.name %}
+			<!-- if user is not the post author -->
+
+			  	{% if not liked %}
+			  	<!-- if user didn't like the post -->
+				<form method="post" action="?like=True">
+					<button class="like" type="submit">
+						like it
+					</button>
+				</form>
+	  			{% else %}
+	  			<!-- if user already liked the post -->
+				<form method="post" action="?unlike=True">
+					<button class="unlike" type="submit">
+						unlike it
+					</button>
+				</form>
+	  			{% endif %}
+  			{% endif %}
+  			<br>
+  			<h3>{{error}}</h3>
+  			<br>
+	  		{% if post.author.name == user.name %}
+	  		<!-- if user is also the post author -->
+	  		<div class="txt-right">
+	  			<a href="/editpost?post={{ post.key().id() }}">
+	  				Edit this post    </a>
+	  				|
+	  			<a href="/deletepost?post={{ post.key().id() }}">
+	  				Delete this post</a>
+			</div>
+  			{% endif %}
+		{% endif %}
+		</div>
+	  <br>
+	  <br>
+	  <hr>
+	  <br>
+	  <div class="comments">
+	  	<h3>COMMENTS</h3>
+	  	<br>
+	  	{% for comment in comments %}
+	  	<!-- for loop to show comments -->
+	  		<div class="comment-author">
+	  		{% if comment.author %}
+	  		<!-- if user is the comment author -->
+	  			<h3>
+	  				{{comment.author.name}}
+	    			<span>wrote:</span>
+	    		</h3>
+	  		{% else %}
+	  		<!-- if user isn't the comment author -->
+	  			<h3>
+	  				anonymous
+	  				<span>wrote:</span>
+	  			</h3>
+	  		{% endif %}
+	  		</div>
+
+	  		<div class="comment-content">
+	  			{{comment.content | safe }}
+	  		</div>
+	  		<br>
+
+	  		{% if comment.author.name == user.name %}
+	  		<!-- if user is also the comment author -->
+	  		<div class="txt-right">
+	  			<a href="/comment/edit?comment={{ comment.key().id() }}">
+	  				Edit Comment   </a>
+	  				|
+	  			<a href="/comment/delete?comment={{ comment.key().id() }}">
+	  				Delete Comment   </a>
+	  		</div>
+	  		{% endif %}
+	  	{% endfor %}
+	  		<br>
+	  	{% if user.name %}
+	  	<!-- if user is logged in -->
+	  		<hr>
+	  		<br>
+	  		<h3> Leave a Comment </h3>
+	  		<form method="post">
+	  			<textarea name="content">{{content}}</textarea>
+	  			<br>
+	  			<br>
+	  			<h3>{{error}}</h3>
+	  			<br>
+	  			<input type="submit">
+	  		</form>
+	  	{% endif %}
+	  	</div>
+	</section>
+{% endblock %}
